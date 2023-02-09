@@ -5,7 +5,9 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module.exports = {
   entry: './src/index.js',
   output: {
+    filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),
+    assetModuleFilename: 'images/[hash][ext][query]',
   },
   module: {
     rules: [
@@ -18,6 +20,7 @@ module.exports = {
       },
       {
         test: /\.html$/,
+//        type: 'asset/resource',
         use: [
           {
             loader: 'html-loader',
