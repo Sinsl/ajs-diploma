@@ -12,5 +12,15 @@
  * ```
  * */
 export default class Team {
-  // TODO: write your logic here
+  constructor() {
+    this.members = new Set();
+  }
+
+  add(gamer) {
+    if (this.members.has(gamer)) {
+      throw new Error('Такой игрок уже есть в команде');
+    } else {
+      this.members.add(gamer);
+    }
+  }
 }
