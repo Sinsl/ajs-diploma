@@ -13,9 +13,13 @@
  * vampire
  */
 export default class Character {
-  constructor(level, type = 'generic') {
+  constructor(level, type) {
     if (new.target.name === 'Character') {
       throw new Error('Нельзя создавать персонажа типа Character');
+    }
+    const arrayType = ['bowman', 'daemon', 'magician', 'swordsman', 'undead', 'vampire'];
+    if (arrayType.includes(type) === false) {
+      throw new Error('Неверный тип игрока');
     }
     this.level = level;
     this.attack = 0;

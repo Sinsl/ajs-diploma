@@ -17,7 +17,6 @@ import Vampire from './characters/Vampire';
  *
  */
 
-
 export function* characterGenerator(allowedTypes, maxLevel) {
   while (true) {
     const SelectedСlass = allowedTypes[Math.floor(Math.random() * allowedTypes.length)];
