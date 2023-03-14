@@ -29,7 +29,7 @@ body {
 
 .controls {
   text-align: center;
-  margin: 50px 0;
+  margin: 50px 0 30px;
 }
 
 .board-container {
@@ -228,6 +228,47 @@ body {
 
 .health-level-indicator-critical {
   background: #f00;
+}
+
+.statistics {
+  position: relative;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  column-gap: 40px;
+  margin-bottom: 20px;
+}
+
+.statistic {
+  text-align: center;
+}
+
+.statistic h6 {
+  font-size: 16px;
+  font-weight: 400;
+  margin: 0;
+}
+
+.statistic p {
+  font-size: 20px;
+  margin: 20px auto 10px;
+}
+.message {
+  background-color: #000;
+  height: 600px;
+  width: 100%;
+  z-index: 1000;
+  position: absolute;
+  opacity: 0.9;
+  text-align: center;
+  color: #ff0;
+  padding-top: calc(600px / 3);
+  font-size: 40px;
+  display: none;
+}
+
+.message_active {
+  display: block;
 }
 
 .damage {

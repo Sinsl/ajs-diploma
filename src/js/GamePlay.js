@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 /* eslint-disable arrow-parens */
 import { calcHealthLevel, calcTileType } from './utils';
 
@@ -62,6 +63,30 @@ export default class GamePlay {
     }
 
     this.cells = Array.from(this.boardEl.children);
+
+    const statistic = this.container.querySelector('.controls');
+    statistic.insertAdjacentHTML(
+      'afterend',
+      `<div class="statistics">
+        <div class="statistic statistic-player">
+          <h6>Ваши баллы</h6>
+          <p>0</p>
+        </div>
+        <div class="statistic statistic-bot">
+          <h6>Баллы компьтера</h6>
+          <p>0</p>
+        </div>
+        <div class="statistic statistic-level">
+          <h6>Уровень</h6>
+          <p>0</p>
+        </div>
+      </div>`,
+    );
+
+    const statisticsEl = this.container.querySelector('.statistics');
+    setTimeout(() => {
+      statisticsEl.insertAdjacentHTML('afterend', '<div class="message">тут будет текст сообщения</div>');
+    }, 0);
   }
 
   /**
@@ -90,6 +115,22 @@ export default class GamePlay {
       charEl.appendChild(healthEl);
       cellEl.appendChild(charEl);
     }
+  }
+
+  /**
+   * Отрисовка статистики
+   *
+   * @param playrs объект со статистикой игроков
+   * @param level уровень игры
+   */
+  redrawStatistic(playrs, level) {
+    const playerEl = this.container.querySelector('.statistic-player').querySelector('p');
+    const botEl = this.container.querySelector('.statistic-bot').querySelector('p');
+    const levelEl = this.container.querySelector('.statistic-level').querySelector('p');
+
+    playerEl.textContent = playrs.player;
+    botEl.textContent = playrs.bot;
+    levelEl.textContent = level;
   }
 
   /**
@@ -218,6 +259,18 @@ export default class GamePlay {
         resolve();
       });
     });
+  }
+
+  showMessage(msg) {
+    const msgEl = this.container.querySelector('.message');
+    msgEl.classList.add('message_active');
+    msgEl.textContent = msg;
+  }
+
+  hideMessage() {
+    const msgEl = this.container.querySelector('.message');
+    msgEl.classList.remove('message_active');
+    msgEl.textContent = '';
   }
 
   setCursor(cursor) {

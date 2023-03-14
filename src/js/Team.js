@@ -23,4 +23,22 @@ export default class Team {
       this.members.add(gamer);
     }
   }
+
+  addAll(...gamers) {
+    gamers.forEach((item) => this.members.add(item));
+  }
+
+  delete(gamer) {
+    if (this.members.has(gamer)) {
+      this.members.delete(gamer);
+    }
+  }
+
+  deleteAll() {
+    this.members.clear();
+  }
+
+  toArray() {
+    return [...this.members];
+  }
 }

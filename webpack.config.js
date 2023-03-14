@@ -20,7 +20,6 @@ module.exports = {
       },
       {
         test: /\.html$/,
-//        type: 'asset/resource',
         use: [
           {
             loader: 'html-loader',
