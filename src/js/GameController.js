@@ -64,10 +64,7 @@ export default class GameController {
       }
     }
     // отрисовка поля
-    this.gamePlay.redrawPositions([
-      ...this.gameState.arrayPlayerPosition,
-      ...this.gameState.arrayBotPosition,
-    ]);
+    this.gamePlay.redrawPositions(this.gameState.positions);
 
     // отрисовка статистики
     this.gamePlay.redrawStatistic(this.gameState.statistic, this.gameState.level);
@@ -140,7 +137,7 @@ export default class GameController {
   addCharacterPosition(arrChar, typeTeam) {
     const arrayIdxPosition = this.arrayAllowedPositions(typeTeam);
     // убираем ячейки, где уже есть игроки
-    const employed = [...this.gameState.arrayPlayerPosition, ...this.gameState.arrayBotPosition]
+    const employed = this.gameState.positions
       .map((item) => item.position);
     employed.forEach((item) => {
       const found = arrayIdxPosition.findIndex((elem) => elem === item);
@@ -287,7 +284,7 @@ export default class GameController {
 
   onCellLeave(index) {
     // удаляем подсказку
-    const character = [...this.gameState.arrayPlayerPosition, ...this.gameState.arrayBotPosition]
+    const character = this.gameState.positions
       .find((item) => item.position === index);
     if (character) {
       this.gamePlay.hideCellTooltip(index);
@@ -390,9 +387,9 @@ export default class GameController {
    * @returns уровень урона
    */
   calcDamage(attackIdx, targetIdx) {
-    const attacker = [...this.gameState.arrayPlayerPosition, ...this.gameState.arrayBotPosition]
+    const attacker = this.gameState.positions
       .find((item) => item.position === attackIdx).character;
-    const target = [...this.gameState.arrayPlayerPosition, ...this.gameState.arrayBotPosition]
+    const target = this.gameState.positions
       .find((item) => item.position === targetIdx).character;
     const damage = Math.ceil(Math.max(attacker.attack - target.defence, attacker.attack * 0.1));
     (target.health - damage) < 0 ? target.health = 0 : target.health -= damage;
@@ -405,7 +402,7 @@ export default class GameController {
    * @returns уровень жизни
    */
   getHealth(index) {
-    return [...this.gameState.arrayPlayerPosition, ...this.gameState.arrayBotPosition]
+    return this.gameState.positions
       .find((item) => item.position === index).character.health;
   }
 
@@ -454,18 +451,7 @@ export default class GameController {
    */
   levelUp() {
     // определяем характеристики оставшихся игроков
-    [...this.gameState.arrayPlayerPosition, ...this.gameState.arrayBotPosition]
-      .forEach((item) => {
-        // eslint-disable-next-line no-param-reassign
-        item.character.attack = Math.max(
-          item.character.attack,
-          Math.round(item.character.attack * ((80 + item.character.health) / 100)),
-        );
-        // eslint-disable-next-line no-unused-expressions
-        (item.character.health + 80) > 100
-          ? item.character.health = 100
-          : item.character.health += 80;
-      });
+    this.gameState.positions.forEach((item) => item.character.levelUp());
 
     this.gameState.level += 1;
     if (this.gameState.level === 5) {
@@ -480,10 +466,7 @@ export default class GameController {
    * Применяется для перемещения игрока
    */
   characterMovement() {
-    this.gamePlay.redrawPositions([
-      ...this.gameState.arrayPlayerPosition,
-      ...this.gameState.arrayBotPosition,
-    ]);
+    this.gamePlay.redrawPositions(this.gameState.positions);
 
     // отрисовка статистики
     this.gamePlay.redrawStatistic(this.gameState.statistic, this.gameState.level);

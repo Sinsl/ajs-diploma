@@ -28,4 +28,14 @@ export default class Character {
     this.type = type;
     // TODO: выбросите исключение, если кто-то использует "new Character()"
   }
+
+  levelUp() {
+    this.attack = Math.max(
+      this.attack,
+      Math.round(this.attack * ((80 + this.health) / 100)),
+    );
+
+    // eslint-disable-next-line no-unused-expressions
+    (this.health + 80) > 100 ? this.health = 100 : this.health += 80;
+  }
 }

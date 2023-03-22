@@ -7,6 +7,10 @@ export default class GameState {
     this.statistic = { player: 0, bot: 0 };
   }
 
+  get positions() {
+    return [...this.arrayPlayerPosition, ...this.arrayBotPosition];
+  }
+
   static from(object) {
     // TODO: create object
     if (typeof object === 'object') {
